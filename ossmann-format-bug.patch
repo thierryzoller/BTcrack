@@ -1,0 +1,31 @@
+--- btcrackmain.old	2009-09-02 09:13:04.000000000 -0600
++++ btcrackmain.c	2009-09-02 09:14:03.000000000 -0600
+@@ -211,16 +211,18 @@
+ 	unsigned long i;
+ 	unsigned char testpin[MAX_LENGTH + 1];
+ 	struct BTCrackStruct *ThreadBTCrack = foo;
++	char format[7];
+ 
+ 	pin_start = ThreadBTCrack->pin_start;
+ 	pin_end = ThreadBTCrack->pin_end;
+ 	pin_length = ThreadBTCrack->pinlen;
++	sprintf(format, "%%0%dlu", pin_length);
+ 
+ 	ThreadBTCrack->pin_solved = 0;
+ 
+ 	for (i = pin_start; i<=pin_end && !pin_solved; i++) {
+ 		memset(testpin, 0, sizeof(testpin));
+-		sprintf((char *) testpin, "%lu", i);
++		sprintf((char *) testpin, format, i);
+ 
+ 		ThreadBTCrack->pins_per_sec = ThreadBTCrack->pins_per_sec + 1;
+ 		if (ProcessPIN(ThreadBTCrack, testpin, pin_length) == 0) {
+@@ -533,7 +535,7 @@
+ 	mytime = (time(NULL) - mytime) + 1;
+ 
+ 	if (sPin[0]) {
+-		printf("Link Key: %s\nPin: %s\nPins/Sec: %lu\n", sPin, sLinkKey, PinsPerSec / (unsigned long) mytime);
++		printf("Link Key: %s\nPin: %s\nPins/Sec: %lu\n", sLinkKey, sPin, PinsPerSec / (unsigned long) mytime);
+ 	} else {
+ 		printf("Key not found :( Pins/Sec: %lu\n", PinsPerSec / (unsigned long) mytime);
+ 	}
