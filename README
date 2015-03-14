@@ -1,3 +1,47 @@
+BTCrack v1.01
+=============
+Authors : Eric Sesterhen &Thierry Zoller
+BTCrack is part of the Backtrack Distribution since 2008
+
+Updates to 1.01
+================
++ Format String bug (Michael Ossman)
++ Master ACO was overwritten by the the slave ACO thus impairing decryption (carl.dunhamm@hotmail.com)
+
+Introduction
+============
+BTCrack is the worlds first Bluetooth Pass phrase (PIN) brute-force tool, BTCrack will brute-force the Passkey and the Link key from captured pairing exchanges.
+To capture the pairing data it is necessary to have a Professional Bluetooth Analyzer : FTE (BPA 100, BPA 105, others), Merlin OR to know how to flash a CSR based consumer USB dongle with special firmware.
+
+Example of an Attack scenario :
+-Attacker reconstructs BD_ADDR of both Master and Slave through passive (reconstructing through a preamble sniff, even when the device is in hidden mode) or active means (redfang)
+-Attacker changes his BD_ADDR to the one of the Slave device
+-Attacker asks to pair with the Master indicating it has no key, the Master will more then often trash the old pairing data and request a new link key from the genuine slave
+-Attacker now captures the key (pairing) exchange taking place between the two devices as the users try to re-establish a connection
+-Attacker exports data to CSV format and imports into BTCrack
+-Attacker can now compromise Master and Slave Bluetooth device through usage of the cracked Linkkey and is able to decrypt the data transmitted between the bluetooth devices
+
+The PIN is not so important as the Linkkey
+-------------------------------------------
+An Attacker will focus on recovering the Linkkey and not the PIN, here's why :
+
+The Link-key allows remote connections without the victim noticing
+The Link-key allows and attacker to connect to devices in non-pairing mode and non discoverable mode
+The Link-key allows decryption of the data
+
+History
+=======
+Olly Whitehouse - 2003 - Presented theoretic weaknesses in the implementation of the pairing exchange.
+Shaked and Wool - 2005 - Present their logic to break pairing exchanges.
+Thierry Zoller - 2006 - First public release of a complete optimised implementation of the Shaked and Wool logic. Optimisations done by Erik Sesterhenn.
+David Hulton / Thierry Zoller - 2007 - Worlds first FPGA based Implementation
+
+
+
+Original Readme :
+
+
+
 
 BTCrack OSS 1.1
 ===============
